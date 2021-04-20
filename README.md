@@ -73,3 +73,42 @@ Most (eventually all) visual parameters can be changed using a setter method.
 Methods starting with `setGraph`, `setRiemann`, `setIntegral`, `setTangent`, `setAymptote`, and `setFunctionPoints` take two parameters: the function it is to be applied to (type `Function`) and the value it is to change. If the method ends with `stroke` or `fill`, that value will be of type `color`; elsewise, the value will be of type `int`.
 
 The three exceptions to the last rule are the methods `setVAsymptote`, `setHAsymptote`, and `setFunctionPoints`, which toggle the appearence of vertical asymptotes, horizontal asymptotes, and extrema / 0 points on the function passed as their first parameter; their second value will be of type `boolean`
+
+Here is a list of all the setter methods so far:
+```
+void setGraphStroke(int functionNum, color colorIn)
+void setGraphStrokeWeight(int functionNum, int strokeWeightIn)
+void setRiemannFill(int functionNum, color colorIn)
+void setRiemannStroke(int functionNum, color colorIn)
+void setRiemannStrokeWeight(int functionNum, int strokeWeightIn)
+void setRiemannPoints(int functionNum, boolean points)
+void setRiemannPointStroke(int functionNum, color pointColor)
+void setRiemannPointWeight(int functionNum, int riemannWeight)
+void setIntegralFill(int functionNum, color colorIn)
+void setTangentStroke(int functionNum, int strokeIn)
+void setTangentWeight(int functionNum, int strokeWeightIn)
+void setTangentDash(int functionNum, boolean dashStrokeIn)
+void setAsymptoteStroke(int functionNum, color strokeIn)
+void setAsymptoteWeight(int functionNum, int strokeWeightIn)
+void setVAsymptote(int functionNum, boolean boolIn)
+void setHAsymptote(int functionNum, boolean boolIn)
+void setFunctionPoints(int functionNum, boolean boolIn)
+void setFunctionPointsStroke(int functionNum, color strokeIn)
+void setFunctionPointsWeight(int functionNum, int weightIn)
+void setShowGridlines(boolean boolIn)
+void setTextSize(int textSizeIn)
+void setTextStroke(color colorIn)
+void setXMin(float in)
+void setXMax(float in)
+void setYMin(float in)
+void setYmax(float in)
+void setBigStep(float in)
+void setSmallStep(float in)
+void setTextDisplayDecimals(int in)
+void setSmallStepWeight(int in)
+void setBigStepWeight(int in)
+void setSmallStepStroke(color in)
+void setBigStepStroke(color in)
+void setTextStep(float in)
+void setBackgroundColor(color in)
+```
