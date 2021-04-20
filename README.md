@@ -10,7 +10,7 @@ A graph visualizer inspired by [manim](https://github.com/3b1b/manim). Uses [mxp
 - Adjustable color and thickness for function lines
 - Adjustable window, step, and gridline parameters
 - Various calculus-based visuaizations, including tangent lines, riemann sums, and integrals
-- Automatic asymtote and extrenum rendering (can be toggled on/off or added manually)
+- Automatic asymtote, intercept, and extrenum rendering (can be toggled on/off or added manually)
 
 
 ## Features to be added
