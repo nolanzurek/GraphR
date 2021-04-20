@@ -28,6 +28,6 @@ void draw() {
 
 void keyPressed() {
 
-  saveFrame("oof.png");
+  saveFrame("output.png");
   
 }
