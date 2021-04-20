@@ -21,7 +21,6 @@ void draw() {
   myGraphR.setIntegralFill(2, color(30, 230, 150, 150));
   myGraphR.drawGraph();
   
-  
   noLoop();
 
 }
