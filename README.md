@@ -46,8 +46,7 @@ Constructor
 Sets the appearence of the window (`bigStep` sets the spacing of major gridlines and `smallStep` sets the spacing of minor gridlines)
   
 `void riemann(int functionNum, int mode, float lowerBound, float higherBound, int partitions)`
-Draws a riemann sum on function `functionNum` (starts at 1 in the order they were added) between `lowerBound` and `higherBound` with `partitions` partitions
-If mode is set to
+Draws a riemann sum on function `functionNum` (starts at 1 in the order they were added) between `lowerBound` and `higherBound` with `partitions` partitions. If mode is set to
 - 1: Left riemann sum
 - 2: right riemann sum
 - 3: middle riemann sum
@@ -58,3 +57,9 @@ Fills in the area under the graph on function `functionNum` between `lowerBound`
 
 `void tangent(int functionNum, float xPoint)`
 Draws a line tangent to function `functionNum` at point `xPoint`
+
+`void drawVAsymptotes(int functionNumber, float... in)`
+`void drawVAsymptotes(float... in)`
+`void drawHAsymptotes(int functionNumber, float... in)`
+`void drawHAsymptotes(float... in)`
+Manually draws horizontal and vertical asymptotes as specified. If a function number is provided, the asymptote will become "tied" to that function and adopt its color. `in` represents the x-value of the asymptote for vertical asymptotes and the y-value for horizontal asymptotes
