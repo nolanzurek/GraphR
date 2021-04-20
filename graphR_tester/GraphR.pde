@@ -83,249 +83,9 @@ class GraphR {
   
   void drawGraph() {
     
+    //draw axes
+    
     background(backgroundColor);
-    drawAxes();
-    
-    float increment = (xMax - xMin)/width;
-    
-    for(int i = 0; i < functionsToGraph.size(); i++) {
-      
-      //integrals
-      
-      stroke(integralFills[i]); strokeWeight(1);
-      
-      for(int j = 0; j < integrals.get(i).size(); j++) {
-      
-        for(float k = integrals.get(i).get(j)[0]; k < integrals.get(i).get(j)[1]; k += map(1, -width/2, width/2, xMin, xMax)) {
-        
-          line(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2, map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2);
-
-        }
-        
-      }
-      
-      //riemanns
-      
-      for(int j = 0; j < riemanns.get(i).size(); j++) {
-        
-        rectMode(CORNERS);
-        
-        if(riemanns.get(i).get(j)[0] == 1) {
-        
-          for(float k = riemanns.get(i).get(j)[1]; k < riemanns.get(i).get(j)[2]; k += (riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]) {
-          
-            fill(riemannFills[i]); stroke(riemannStrokes[i]); strokeWeight(riemannStrokeWeights[i]);
-            
-            rect(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2, map(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]), xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2);
-            
-            if(riemannPoints[i]) {
-              
-              stroke(riemannPointColors[i]); strokeWeight(riemannPointWeights[i]);
-            
-              point(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2);
-              
-            }
-            
-          }
-          
-        } else if (riemanns.get(i).get(j)[0] == 2) {
-        
-          for(float k = riemanns.get(i).get(j)[1]; k < riemanns.get(i).get(j)[2]; k += (riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]) {
-          
-            rect(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3])), yMin, yMax, -height/2, height/2)+height/2, map(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]), xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2);
-            
-            if(riemannPoints[i]) {
-              
-              stroke(riemannPointColors[i]); strokeWeight(riemannPointWeights[i]);
-            
-              point(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2);
-              
-            }
-            
-          }
-          
-        } else if (riemanns.get(i).get(j)[0] == 3) {
-        
-          for(float k = riemanns.get(i).get(j)[1]; k < riemanns.get(i).get(j)[2]; k += (riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]) {
-          
-            rect(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k + 0.5*((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3])), yMin, yMax, -height/2, height/2)+height/2, map(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]), xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2);
-            
-            if(riemannPoints[i]) {
-              
-              stroke(riemannPointColors[i]); strokeWeight(riemannPointWeights[i]);
-            
-              point(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2);
-              
-            }
-            
-          }
-          
-        }
-        
-      }
-      
-      //tangent at point x
-      
-      stroke(tangentStrokes[i]); strokeWeight(tangentWeights[i]);
-      
-      for(int j = 0; j < tangents.get(i).size(); j++) {
-        
-        float y1 = -1*map((float)(functionsToGraph.get(i).calculate(tangents.get(i).get(j)) + ((functionsToGraph.get(i).calculate(tangents.get(i).get(j) + increment*0.1) - functionsToGraph.get(i).calculate(tangents.get(i).get(j)))/(increment*0.1)) * (xMin - tangents.get(i).get(j))), yMin, yMax, -height/2, height/2)+height/2;
-        float y2 = -1*map((float)(functionsToGraph.get(i).calculate(tangents.get(i).get(j)) + ((functionsToGraph.get(i).calculate(tangents.get(i).get(j) + increment*0.1) - functionsToGraph.get(i).calculate(tangents.get(i).get(j)))/(increment*0.1)) * (xMax - tangents.get(i).get(j))), yMin, yMax, -height/2, height/2)+height/2;
-      
-        if(tangentDashed[i]) {
-        
-          dottedLine(0, (float)y1, width, (float)y2);
-          
-        } else {
-        
-          line(0, (float)y1, width, (float)y2);
-          
-        }
-        
-      }
-      
-      beginShape();
-    
-      for(float j = xMin; j < xMax; j+= increment) {
-        
-        /* VARIABLE INCREMENT
-        
-        if(1/functionsToGraph.get(i).calculate(j) < 5 && 1/functionsToGraph.get(i).calculate(j) > 0.1) {
-        
-          increment = (float)(1/functionsToGraph.get(i).calculate(j))*(xMax - xMin)/width;
-          
-        }
-        
-        */
-        
-        //check for vertical asymptotes
-        
-        if(drawVAsymptote[i]) {
-        
-          if(GraphRUtil.above0((float)functionsToGraph.get(i).calculate(j)) != GraphRUtil.above0((float)functionsToGraph.get(i).calculate(j + increment)) && abs((float)functionsToGraph.get(i).calculate(j) - (float)functionsToGraph.get(i).calculate(j + increment)) > 100) {
-            
-            stroke(asymptoteStroke[i]); strokeWeight(asymptoteWeights[i]);
-            
-            dottedLine(map(j, xMin, xMax, -width/2, width/2)+width/2, 0, map(j, xMin, xMax, -width/2, width/2)+width/2, height);
-            
-          }
-          
-        }
-        
-        //check for horizontal asymptotes
-        
-        if(drawHAsymptote[i]) {
-        
-          if(Math.abs(functionsToGraph.get(i).calculate(1000000) - functionsToGraph.get(i).calculate(1000000 + random(100, 200))) < 0.0001 && Math.abs(functionsToGraph.get(i).calculate(1000000) - functionsToGraph.get(i).calculate(1000000 + random(100, 200))) < 0.0001) {
-            
-            stroke(asymptoteStroke[i]); strokeWeight(asymptoteWeights[i]);
-            
-            dottedLine(0, -1*map((float)functionsToGraph.get(i).calculate(1000000), yMin, yMax, -height/2, height/2)+height/2, width, -1*map((float)functionsToGraph.get(i).calculate(1000000), yMin, yMax, -height/2, height/2)+height/2);
-            
-          }
-          
-          if(Math.abs(functionsToGraph.get(i).calculate(-1000000) - functionsToGraph.get(i).calculate(-1000000 + random(100, 200))) < 0.0001 && Math.abs(functionsToGraph.get(i).calculate(-1000000) - functionsToGraph.get(i).calculate(-1000000 + random(100, 200))) < 0.0001) {
-            
-            stroke(asymptoteStroke[i]); strokeWeight(asymptoteWeights[i]);
-            
-            dottedLine(0, -1*map((float)functionsToGraph.get(i).calculate(-1000000), yMin, yMax, -height/2, height/2)+height/2, width, -1*map((float)functionsToGraph.get(i).calculate(-1000000), yMin, yMax, -height/2, height/2)+height/2);
-            
-          }
-          
-        }
-        
-        //if a vertex isn't drawn on the screen and isn't connected to any that are, create a new shape. Otherwise, draw a vertex() for each point calculated
-        
-        if(functionsToGraph.get(i).calculate(j) > yMax) {
-          
-          stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
-          
-          if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment > 0) {
-            
-            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
-          
-            endShape();
-          
-            beginShape();
-            
-            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
-            
-          } else if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment < 0) {
-          
-            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
-            
-            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
-          
-            endShape();
-          
-            beginShape();
-            
-          }
-          
-        } else if(functionsToGraph.get(i).calculate(j) < yMin) {
-          
-          strokeWeight(graphStrokeWeights[i]);
-        
-          if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment > 0) {
-            
-            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
-            
-            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
-          
-            endShape();
-          
-            beginShape();
-            
-          } else if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment < 0) {
-            
-            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
-          
-            endShape();
-          
-            beginShape();
-            
-            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
-            
-          }
-        
-        } else {
-          
-          stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
-        
-          vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
-          
-        }
-        
-        if(drawPoints[i]) {
-        
-          if(abs(j) < increment || abs((float)functionsToGraph.get(i).calculate(j)) < increment || (abs((float)(functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j + increment*0.01)) / (increment*0.01)) < 0.005)) {
-            
-            stroke(functionPointColor[i]); strokeWeight(functionPointWeight[i]);
-            
-            point(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
-            
-          }
-          
-        }
-        
-      }
-            
-      endShape();
-    
-    }
-    
-  }
-  
-  void drawGraph(Function... functions) {
-  
-    addFunction(functions);
-    
-    drawGraph();
-    
-  }
-  
-  void drawAxes() {
     
     stroke(mainAxisStroke); strokeWeight(mainAxisWeight);
   
@@ -528,6 +288,270 @@ class GraphR {
       
     }
     
+    float increment = (xMax - xMin)/width;
+    
+    for(int i = 0; i < functionsToGraph.size(); i++) {
+      
+      //integrals
+      
+      stroke(integralFills[i]); strokeWeight(1);
+      
+      for(int j = 0; j < integrals.get(i).size(); j++) {
+      
+        for(float k = integrals.get(i).get(j)[0]; k < integrals.get(i).get(j)[1]; k += map(1, -width/2, width/2, xMin, xMax)) {
+        
+          line(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2, map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2);
+
+        }
+        
+      }
+      
+      //riemanns
+      
+      for(int j = 0; j < riemanns.get(i).size(); j++) {
+        
+        rectMode(CORNERS);
+        
+        if(riemanns.get(i).get(j)[0] == 1) {
+        
+          for(float k = riemanns.get(i).get(j)[1]; k < riemanns.get(i).get(j)[2]; k += (riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]) {
+          
+            fill(riemannFills[i]); stroke(riemannStrokes[i]); strokeWeight(riemannStrokeWeights[i]);
+            
+            rect(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2, map(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]), xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2);
+            
+            if(riemannPoints[i]) {
+              
+              stroke(riemannPointColors[i]); strokeWeight(riemannPointWeights[i]);
+            
+              point(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2);
+              
+            }
+            
+          }
+          
+        } else if (riemanns.get(i).get(j)[0] == 2) {
+        
+          for(float k = riemanns.get(i).get(j)[1]; k < riemanns.get(i).get(j)[2]; k += (riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]) {
+          
+            fill(riemannFills[i]); stroke(riemannStrokes[i]); strokeWeight(riemannStrokeWeights[i]);
+            
+            rect(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3])), yMin, yMax, -height/2, height/2)+height/2, map(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]), xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2);
+            
+            if(riemannPoints[i]) {
+              
+              stroke(riemannPointColors[i]); strokeWeight(riemannPointWeights[i]);
+            
+              point(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k), yMin, yMax, -height/2, height/2)+height/2);
+              
+            }
+            
+          }
+          
+        } else if (riemanns.get(i).get(j)[0] == 3) {
+        
+          for(float k = riemanns.get(i).get(j)[1]; k < riemanns.get(i).get(j)[2]; k += (riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]) {
+          
+            fill(riemannFills[i]); stroke(riemannStrokes[i]); strokeWeight(riemannStrokeWeights[i]);
+            
+            rect(map(k, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k + 0.5*((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3])), yMin, yMax, -height/2, height/2)+height/2, map(k + ((riemanns.get(i).get(j)[2] - riemanns.get(i).get(j)[1])/riemanns.get(i).get(j)[3]), xMin, xMax, -width/2, width/2)+width/2, -1*map(0, yMin, yMax, -height/2, height/2)+height/2);
+            
+            if(riemannPoints[i]) {
+              
+              stroke(riemannPointColors[i]); strokeWeight(riemannPointWeights[i]);
+            
+              point(map(k + (abs(riemanns.get(i).get(j)[1] - riemanns.get(i).get(j)[2])/riemanns.get(i).get(j)[3])*0.5, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(k + (abs(riemanns.get(i).get(j)[1] - riemanns.get(i).get(j)[2])/riemanns.get(i).get(j)[3])*0.5), yMin, yMax, -height/2, height/2)+height/2);
+              
+            }
+            
+          }
+          
+        }
+        
+      }
+      
+      //tangent at point x
+      
+      stroke(tangentStrokes[i]); strokeWeight(tangentWeights[i]);
+      
+      for(int j = 0; j < tangents.get(i).size(); j++) {
+        
+        float y1 = -1*map((float)(functionsToGraph.get(i).calculate(tangents.get(i).get(j)) + ((functionsToGraph.get(i).calculate(tangents.get(i).get(j) + increment*0.1) - functionsToGraph.get(i).calculate(tangents.get(i).get(j)))/(increment*0.1)) * (xMin - tangents.get(i).get(j))), yMin, yMax, -height/2, height/2)+height/2;
+        float y2 = -1*map((float)(functionsToGraph.get(i).calculate(tangents.get(i).get(j)) + ((functionsToGraph.get(i).calculate(tangents.get(i).get(j) + increment*0.1) - functionsToGraph.get(i).calculate(tangents.get(i).get(j)))/(increment*0.1)) * (xMax - tangents.get(i).get(j))), yMin, yMax, -height/2, height/2)+height/2;
+      
+        if(tangentDashed[i]) {
+        
+          dottedLine(0, (float)y1, width, (float)y2);
+          
+        } else {
+        
+          line(0, (float)y1, width, (float)y2);
+          
+        }
+        
+      }
+      
+      beginShape();
+    
+      for(float j = xMin; j < xMax; j+= increment) {
+        
+        /* VARIABLE INCREMENT
+        
+        if(1/functionsToGraph.get(i).calculate(j) < 5 && 1/functionsToGraph.get(i).calculate(j) > 0.1) {
+        
+          increment = (float)(1/functionsToGraph.get(i).calculate(j))*(xMax - xMin)/width;
+          
+        }
+        
+        */
+        
+        //check for vertical asymptotes
+        
+        if(drawVAsymptote[i]) {
+        
+          if(above0((float)functionsToGraph.get(i).calculate(j)) != above0((float)functionsToGraph.get(i).calculate(j + increment)) && abs((float)functionsToGraph.get(i).calculate(j) - (float)functionsToGraph.get(i).calculate(j + increment)) > 100) {
+            
+            stroke(asymptoteStroke[i]); strokeWeight(asymptoteWeights[i]);
+            
+            dottedLine(map(j, xMin, xMax, -width/2, width/2)+width/2, 0, map(j, xMin, xMax, -width/2, width/2)+width/2, height);
+            
+          }
+          
+        }
+        
+        //check for horizontal asymptotes
+        
+        if(drawHAsymptote[i]) {
+        
+          if(Math.abs(functionsToGraph.get(i).calculate(1000000) - functionsToGraph.get(i).calculate(1000000 + random(100, 200))) < 0.0001 && Math.abs(functionsToGraph.get(i).calculate(1000000) - functionsToGraph.get(i).calculate(1000000 + random(100, 200))) < 0.0001) {
+            
+            stroke(asymptoteStroke[i]); strokeWeight(asymptoteWeights[i]);
+            
+            dottedLine(0, -1*map((float)functionsToGraph.get(i).calculate(1000000), yMin, yMax, -height/2, height/2)+height/2, width, -1*map((float)functionsToGraph.get(i).calculate(1000000), yMin, yMax, -height/2, height/2)+height/2);
+            
+          }
+          
+          if(Math.abs(functionsToGraph.get(i).calculate(-1000000) - functionsToGraph.get(i).calculate(-1000000 + random(100, 200))) < 0.0001 && Math.abs(functionsToGraph.get(i).calculate(-1000000) - functionsToGraph.get(i).calculate(-1000000 + random(100, 200))) < 0.0001) {
+            
+            stroke(asymptoteStroke[i]); strokeWeight(asymptoteWeights[i]);
+            
+            dottedLine(0, -1*map((float)functionsToGraph.get(i).calculate(-1000000), yMin, yMax, -height/2, height/2)+height/2, width, -1*map((float)functionsToGraph.get(i).calculate(-1000000), yMin, yMax, -height/2, height/2)+height/2);
+            
+          }
+          
+        }
+        
+        //if a vertex isn't drawn on the screen and isn't connected to any that are, create a new shape. Otherwise, draw a vertex() for each point calculated
+        
+        if(functionsToGraph.get(i).calculate(j) > yMax) {
+          
+          stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
+          
+          if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment > 0) {
+            
+            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
+          
+            endShape();
+          
+            beginShape();
+            
+            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
+            
+          } else if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment < 0) {
+          
+            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
+            
+            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
+          
+            endShape();
+          
+            beginShape();
+            
+          }
+          
+        } else if(functionsToGraph.get(i).calculate(j) < yMin) {
+          
+          strokeWeight(graphStrokeWeights[i]);
+        
+          if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment > 0) {
+            
+            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
+            
+            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
+          
+            endShape();
+          
+            beginShape();
+            
+          } else if((functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j+increment))/increment < 0) {
+            
+            stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
+          
+            endShape();
+          
+            beginShape();
+            
+            vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
+            
+          }
+        
+        } else {
+          
+          stroke(graphColors[i]); strokeWeight(graphStrokeWeights[i]); noFill();
+        
+          vertex(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
+          
+        }
+        
+        if(drawPoints[i]) {
+        
+          if(abs(j) < increment || abs((float)functionsToGraph.get(i).calculate(j)) < increment || (abs((float)(functionsToGraph.get(i).calculate(j) - functionsToGraph.get(i).calculate(j + increment*0.01)) / (increment*0.01)) < 0.005)) {
+            
+            stroke(functionPointColor[i]); strokeWeight(functionPointWeight[i]);
+            
+            point(map(j, xMin, xMax, -width/2, width/2)+width/2, -1*map((float)functionsToGraph.get(i).calculate(j), yMin, yMax, -height/2, height/2)+height/2);
+            
+          }
+          
+        }
+        
+      }
+            
+      endShape();
+    
+    }
+    
+  }
+  
+  void drawGraph(Function... functions) {
+  
+    functionsToGraph.clear();
+    addFunction(functions);
+    
+    drawGraph();
+    
+  }
+  
+  void drawGraph(float xMinIn, float xMaxIn, float yMinIn, float yMaxIn) {
+  
+    xMin = xMinIn;
+    xMax = xMaxIn;
+    yMin = yMinIn;
+    yMax = yMaxIn;
+    
+    drawGraph();
+    
+  }
+  
+  void drawGraph(float xMinIn, float xMaxIn, float yMinIn, float yMaxIn, Function functions) {
+  
+    xMin = xMinIn;
+    xMax = xMaxIn;
+    yMin = yMinIn;
+    yMax = yMaxIn;
+    
+    drawGraph(functions);
+    
   }
   
   void setRange(float xMin, float xMax, float yMin, float yMax, float bigStep, float smallStep) {
@@ -606,7 +630,6 @@ class GraphR {
   
     float[] temp = {lowerBound, higherBound};
     integrals.get(functionNum-1).add(temp);
-    println(integrals.get(0).size());
     
   }
   
@@ -831,6 +854,18 @@ class GraphR {
   void setBackgroundColor(color in) {
   
     backgroundColor = in;
+    
+  }
+  
+  boolean above0(float f) {
+   
+    if(abs(f) != f) {
+    
+      return false;
+      
+    }
+    
+    return true;
     
   }
   
