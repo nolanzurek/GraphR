@@ -33,6 +33,8 @@ As Functions are objects (from mxparser), they must be declared to be passed as 
 ### Methods
 (input variables are self-explanatory)
 
+#### Core methods
+
 `void drawGraph(Function... functions)`
 Constructor (window defaults to -10 < x < 10 and -10 < y 10)
 
@@ -63,3 +65,11 @@ Draws a line tangent to function `functionNum` at point `xPoint`
 `void drawHAsymptotes(int functionNumber, float... in)`
 `void drawHAsymptotes(float... in)`
 Manually draws horizontal and vertical asymptotes as specified. If a function number is provided, the asymptote will become "tied" to that function and adopt its color. `in` represents the x-value of the asymptote for vertical asymptotes and the y-value for horizontal asymptotes
+
+#### Setters / Mutators
+
+Most (eventually all) visual parameters can be changed using a setter method. 
+
+Methods starting with `setGraph`, `setRiemann`, `setIntegral`, `setTangent`, `setAymptote`, and `setFunctionPoints` take two parameters: the function it is to be applied to (type `Function`) and the value it is to change. If the method ends with `stroke` or `fill`, that value will be of type `color`; elsewise, the value will be of type `int`.
+
+The three exceptions to the last rule are the methods `setVAsymptote`, `setHAsymptote`, and `setFunctionPoints`, which toggle the appearence of vertical asymptotes, horizontal asymptotes, and extrema / 0 points on the function passed as their first parameter; their second value will be of type `boolean`
