@@ -13,9 +13,15 @@ A graph visualizer inspired by [manim](https://github.com/3b1b/manim). Uses [mxp
 - Automatic asymtote and extrenum rendering (can be toggled on/off or added manually)
 
 
-### Features to be added
+## Features to be added
 
 - Parametric function graphing
+- Better aymptote and extrenum detection
+- Intersection detection
+- Various animations (!)
+  - Interpolation between two functions (linear and cosine)
+  - "Draw-on" effect for graphs
+  - "Draw-on" effect for all other elements (gridlines, asymptotes, tangent lines, etc)
 
 ## Usage
 
