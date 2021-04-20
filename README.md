@@ -2,7 +2,7 @@
 
 A graph visualizer inspired by [manim](https://github.com/3b1b/manim). Uses [mxparser](https://github.com/mariuszgromada/MathParser.org-mXparser) for function parsing.
 
-![example with integral and riemann sum](https://user-images.githubusercontent.com/42624568/115448741-4bff5f80-a1d7-11eb-8de2-dea5b0bf3cfa.png)
+![example with integral and riemann sum](https://user-images.githubusercontent.com/42624568/115448741-4bff5f80-a1d7-11eb-8de2-dea5b0bf3cfa.png =500x500)
 
 ## Features
 
