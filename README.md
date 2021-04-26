@@ -18,6 +18,8 @@ A graph visualizer inspired by [manim](https://github.com/3b1b/manim). Uses [mxp
 - Unlimited number of functions
   - Object-based functions instead of addFunction method
 - Parametric function graphing
+- Polar graphing
+- Vector field visualization
 - Better aymptote and extrenum detection, intersection detection
 - Various animations (!)
   - Interpolation between two functions (linear and cosine)
