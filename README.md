@@ -20,7 +20,7 @@ A graph visualizer inspired by [manim](https://github.com/3b1b/manim). Uses [mxp
 - Parametric function graphing
 - Polar graphing
 - Vector field visualization
-- Better aymptote and extrenum detection, intersection detection
+- Better aymptote and extrenum detection, efficient intersection detection
 - Various animations (!)
   - Interpolation between two functions (linear and cosine)
   - "Draw-on" effect for graphs
